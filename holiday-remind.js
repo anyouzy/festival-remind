@@ -22,6 +22,7 @@ class holidayRemind{
             ],
             [
                 {hName:"Women's Day", fixed:8, ordinal:false, week:false, hInfo:""},
+                {hName:"Pi Day", fixed:14, ordinal:false, week:false, hInfo:""},
                 {hName:"St. Patrick's Day", fixed:17, ordinal:false, week:false, hInfo:""}
             ],
             [
