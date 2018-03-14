@@ -74,8 +74,8 @@ class holidayRemind{
         this.currentDate = oDate.getDate();//当前多少号
         this.nextMonthFirstDay = new Date(this.currentYear,this.currentMonth+1,1).getTime();//下个月1号时间戳
         this.currentMonthArr = this.basicHolidayData[this.currentMonth];//当前月份节日数组
-        this.daysBeforeHoliday = 7; //节日之前多少天需要提醒
-        this.daysAfterHoliday = 7; //节日之后需要提醒多少天
+        this.daysBeforeHoliday = 14; //节日之前多少天需要提醒，可修改
+        this.daysAfterHoliday = 3; //节日之后需要提醒多少天，可修改
         this.preMonthArr = [];   //上一个月节日数组
         this.nextMonthArr = [];  //下一个月节日数组
         this.finalHolidayData = []; //最终供DOM使用的节日数组
@@ -112,12 +112,12 @@ class holidayRemind{
     }
 
     /**
-     * [isShouldRemind 根据传入的节日日期，判断当前时间是否处于前提前后一周，如果是，提醒，否则不提醒]
+     * [ShouldRemindThisMonth 根据传入的节日日期，判断本月是否应该显示某节日]
      * @param  {Number}  holidayDay [节日日期]
      * @param  {Number}  month      [月份]
      * @param  {String}  hName      [节日名称]
      */
-    isShouldRemind(holidayDay=0,month=0,hName='') {
+    ShouldRemindThisMonth(holidayDay=0,month=0,hName='') {
         if(holidayDay > 31 || holidayDay < 1)return;
         let holidayTime = new Date(this.currentYear,month,holidayDay).getTime();
         let startTime = holidayTime - (this.daysBeforeHoliday + 1) * 86400000;
@@ -146,11 +146,11 @@ class holidayRemind{
             {
                 let {ordinal, week} = v;
                 let holidayDay = this.getSpecificDate(month,ordinal,week);
-                this.isShouldRemind(holidayDay,month,v.hName);
+                this.ShouldRemindThisMonth(holidayDay,month,v.hName);
             }
             else
             {
-                this.isShouldRemind(v.fixed,month,v.hName);
+                this.ShouldRemindThisMonth(v.fixed,month,v.hName);
             }
         });
     }
@@ -160,15 +160,15 @@ class holidayRemind{
      */
     check()
     {
-        //如果当前这一天在7号之前,循环前一个月
-        if(this.currentDate < (this.daysBeforeHoliday + 1))
+        //如果当前这一天处于节日后提醒天数之前就检查上一个月
+        if(this.currentDate < (this.daysAfterHoliday + 1))
         {
             preMonthArr = this.basicHolidayData[this.currentMonth - 1];
             this.getFinalHolidayArr(this.preMonthArr, this.currentMonth - 1);
         }
         this.getFinalHolidayArr(this.currentMonthArr,this.currentMonth);
-        //如果当前这一天加上7天已经超过下个月1号的时间戳，循环下一个月
-        if((this.currentTime + 86400000 * this.daysAfterHoliday) > this.nextMonthFirstDay)
+        //如果当前这一天 + 节日前提醒时间  已经超过了下个月1号就检查下个月
+        if((this.currentTime + 86400000 * this.daysBeforeHoliday) > this.nextMonthFirstDay)
         {
             this.nextMonthArr = this.basicHolidayData[this.currentMonth + 1];
             this.getFinalHolidayArr(this.nextMonthArr, this.currentMonth + 1);
@@ -245,7 +245,3 @@ class holidayRemind{
 
 let hr = new holidayRemind();
 hr.render();
-
-
-
- 
