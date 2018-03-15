@@ -243,5 +243,5 @@ class festivalRemind{
 
 /***类定义结束***/
 
-let hr = new festivalRemind();
-hr.render();
+let fr = new festivalRemind();
+fr.render();
