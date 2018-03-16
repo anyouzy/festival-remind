@@ -6,50 +6,52 @@ class festivalRemind{
     {
         /*基本节日信息
             hName: 节日名称
-            fixed: 节日日期是否固定，不固定为false,固定为具体的日期,这项有具体的值，下两项全部设置为false
-            ordinal + week: 第几个星期几，星期天week处写0，这两项有具体的值，上一项fixed设置为false
+            fixed: 节日日期是否固定，不固定为false,固定为具体的日期,这项有具体的值，ordinal 和 week全部设为false
+            ordinal + week: 第几个星期几，这两项有值时，fixed设为false
+                ordinal:第几个星期几中的前者，如5月的第2个星期4，ordinal写2，如果是5月的最后1个星期1，ordinal写-1
+                week:第几个星期几中的后者，如5月的第2个星期4，那么week就写4
             hInfo: 节日描述信息
         */
         this.basicFestivalData = [
             [
                 {hName:"New Year's Day", fixed:1, ordinal:false, week:false, hInfo:""},
                 {hName:"Martin Luther King Day", fixed:false, ordinal:3, week:1, hInfo:""},
-                {hName:"Australia Day", fixed:26, ordinal:false, week:false, hInfo:""}
+                {hName:"Australia Day", fixed:26, ordinal:false, week:false, hInfo:""},
             ],
             [
                 {hName:"Valentine's Day", fixed:14, ordinal:false, week:false, hInfo:""},
-                {hName:"President's Day", fixed:false, ordinal:3, week:1, hInfo:""}
+                {hName:"President's Day", fixed:false, ordinal:3, week:1, hInfo:""},
             ],
             [
                 {hName:"Women's Day", fixed:8, ordinal:false, week:false, hInfo:""},
                 {hName:"Pi Day", fixed:14, ordinal:false, week:false, hInfo:""},
-                {hName:"St. Patrick's Day", fixed:17, ordinal:false, week:false, hInfo:""}，
-                {hName:"World Water Day", fixed:22, ordinal:false, week:false, hInfo:""}
+                {hName:"St. Patrick's Day", fixed:17, ordinal:false, week:false, hInfo:""},
+                {hName:"World Water Day", fixed:22, ordinal:false, week:false, hInfo:""},
             ],
             [
                 {hName:"April Fool's Day", fixed:1, ordinal:false, week:false, hInfo:""},
                 {hName:"Tax Day", fixed:15, ordinal:false, week:false, hInfo:""},
                 {hName:"Earth Day", fixed:22, ordinal:false, week:false, hInfo:""},
-                {hName:"Anzac Day", fixed:25, ordinal:false, week:false, hInfo:""}
+                {hName:"Anzac Day", fixed:25, ordinal:false, week:false, hInfo:""},
             ],
             [
                 {hName:"May Day", fixed:1, ordinal:false, week:false, hInfo:""},
                 {hName:"Mother's Day", fixed:false, ordinal:2, week:0, hInfo:""},
-                {hName:"Memorial Day", fixed:false, ordinal:-1, week:1, hInfo:""}
+                {hName:"Memorial Day", fixed:false, ordinal:-1, week:1, hInfo:""},
             ],
             [
-                {hName:"Father's Day", fixed:false, ordinal:3, week:0, hInfo:""}
+                {hName:"Father's Day", fixed:false, ordinal:3, week:0, hInfo:""},
             ],
             [
                 {hName:"Canada Day", fixed:1, ordinal:false, week:false, hInfo:""},
-                {hName:"Independence Day", fixed:4, ordinal:false, week:false, hInfo:""}
+                {hName:"Independence Day", fixed:4, ordinal:false, week:false, hInfo:""},
             ],
             [
                 
             ],
             [
                 {hName:"Labor Day", fixed:false, ordinal:1, week:1, hInfo:""},
-                {hName:"Father's Day", fixed:false, ordinal:1, week:1, hInfo:""}
+                {hName:"Father's Day", fixed:false, ordinal:1, week:1, hInfo:""},
             ],
             [
                 {hName:"Columbus Day", fixed:false, ordinal:2, week:1, hInfo:""},
@@ -63,12 +65,12 @@ class festivalRemind{
             ],
             [
                 {hName:"Christmas", fixed:25, ordinal:false, week:false, hInfo:""},
-                {hName:"Boxing Day", fixed:26, ordinal:false, week:false, hInfo:""}
+                {hName:"Boxing Day", fixed:26, ordinal:false, week:false, hInfo:""},
             ]
         ];
 
 
-        let oDate = new Date(); //当前日起对象
+        let oDate = new Date(); //当前日期对象
         this.currentTime = oDate.getTime();//当前时间戳
         this.currentYear = oDate.getFullYear();//当前年份
         this.currentMonth = oDate.getMonth();//当前月份
@@ -81,7 +83,7 @@ class festivalRemind{
         this.nextMonthArr = [];  //下一个月节日数组
         this.finalFestivalData = []; //最终供DOM使用的节日数组
 
-        this.easterInfo = {hName:"Easter",hMonth:4,hDay:1,hInfo:""};//Easter算法比较复杂,而且会影响UK母亲节的具体日期,每年单独手动设置一次即可，后续再找其他方案
+        this.easterInfo = {hName:"Easter",hMonth:4,hDay:1,hInfo:""};//Easter算法比较复杂,而且会影响UK母亲节和Good Friday的具体日期,每年单独手动设置一次即可，后续再找其他方案
     
         this.handleEasterRelated();
         
@@ -89,7 +91,7 @@ class festivalRemind{
 
 
     /**
-     * [getSpecificDate 根据几月的第几个星期几算出节日的具体日期]
+     * [getSpecificDate 根据几月的第几个星期几算出节日具体是多少号]
      * @param  {Number} month   [月份0-11]
      * @param  {Number} ordinal [第几个星期1-5]
      * @param  {Number} week    [星期几0-6]
@@ -97,18 +99,39 @@ class festivalRemind{
      */
     getSpecificDate(month=0,ordinal=1,week=0)
     {
-        let oDate = new Date(this.currentYear,month,1);
-        let firstday = oDate.getDay();
+        if(month > 11 || week > 6)return;
+        let firstDayObj = new Date(this.currentYear,month,1);//某月1号日期对象
+        let lastDayTimestamp = new Date(this.currentYear,month+1,1).getTime() - 86400000;//某月最后一天时间戳
+        let lastDayObj = new Date(lastDayTimestamp);//某月最后一天日期对象
+        let firstDay = firstDayObj.getDay();//某月1号星期几
+        let lastDay = lastDayObj.getDay();//某月最后一天星期几
+        let lastDayDate = lastDayObj.getDate();//某月最后一天多少号
         let specificDate = 0;
-        if(month > 11 || ordinal > 5 || week > 6)return;
-        if(firstday > week)
+        if(ordinal < 0)
         {
-            specificDate = 8 - (firstday - week ) + (ordinal - 1) * 7;
+            if(ordinal < -5) return;
+            if (lastDay > week)
+            {
+                specificDate = lastDayDate - (lastDay - week) - (-ordinal - 1) * 7;
+            }
+            else
+            {
+                specificDate = lastDayDate - (7 - (week - lastDay)) - (-ordinal - 1) * 7;
+            }
         }
-        else 
+        else
         {
-            specificDate = (week - firstday + 1) + (ordinal - 1) * 7;
+            if(ordinal > 5) return;
+            if(firstDay > week)
+            {
+                specificDate = 8 - (firstDay - week ) + (ordinal - 1) * 7;
+            }
+            else 
+            {
+                specificDate = (week - firstDay + 1) + (ordinal - 1) * 7;
+            }
         }
+        
         return specificDate;
     }
 
