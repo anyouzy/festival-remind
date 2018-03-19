@@ -206,7 +206,7 @@ class festivalRemind{
     {
         //处理Easter
         let {hMonth,hDay} = this.easterInfo;        
-        let tmpEasterObj = {hName:"Easter",fixed:hMonth, ordinal:false, week:false, hInfo:""};
+        let tmpEasterObj = {hName:"Easter",fixed:hDay, ordinal:false, week:false, hInfo:""};
         this.basicFestivalData[hMonth - 1].push(tmpEasterObj);
 
         let eastertime = new Date(this.currentYear,hMonth-1,hDay).getTime();
@@ -235,6 +235,7 @@ class festivalRemind{
     render()
     {
         this.check();
+	console.log(this.basicFestivalData);
         let oTitle = document.querySelector('#title');
         let oTable = (oTitle.parentElement.parentElement.parentElement);
         let oTr = document.createElement('tr');
