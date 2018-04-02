@@ -187,7 +187,7 @@ class festivalRemind{
         //如果当前这一天处于节日后提醒天数之前就检查上一个月
         if(this.currentDate < (this.daysAfterFestival + 1))
         {
-            preMonthArr = this.basicFestivalData[this.currentMonth - 1];
+            this.preMonthArr = this.basicFestivalData[this.currentMonth - 1];
             this.getFinalFestivalArr(this.preMonthArr, this.currentMonth - 1);
         }
         this.getFinalFestivalArr(this.currentMonthArr,this.currentMonth);
