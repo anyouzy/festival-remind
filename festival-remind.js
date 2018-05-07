@@ -36,6 +36,7 @@ class festivalRemind{
             ],
             [
                 {hName:"May Day", fixed:1, ordinal:false, week:false, hInfo:""},
+                {hName:"Nurse Day", fixed:12, ordinal:false, week:false, hInfo:""},
                 {hName:"Mother's Day", fixed:false, ordinal:2, week:0, hInfo:""},
                 {hName:"Memorial Day", fixed:false, ordinal:-1, week:1, hInfo:""},
             ],
