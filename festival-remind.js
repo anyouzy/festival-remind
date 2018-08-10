@@ -98,9 +98,35 @@ class festivalRemind {
             ]
         ];
         //de基本节日信息
-        let deBasicFestivalData = [];
+        let deBasicFestivalData = [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ];
         //fr基本节日信息
-        let frBasicFestivalData = [];
+        let frBasicFestivalData = [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ];
 
 
 
