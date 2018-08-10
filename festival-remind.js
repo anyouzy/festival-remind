@@ -3,7 +3,9 @@
 class festivalRemind {
 
     constructor() {
-        /*基本节日信息
+        this.siteLang = 'en';//站点语言，默认为英语站点
+        this.getSiteLang();
+        /*基本节日信息  de/fr待补充
             hName: 节日名称
             fixed: 节日日期是否固定，不固定为false,固定为具体的日期,这项有具体的值，ordinal 和 week全部设为false
             ordinal + week: 第几个星期几，这两项有值时，fixed设为false
@@ -11,63 +13,72 @@ class festivalRemind {
                 week:第几个星期几中的后者，如5月的第2个星期4，那么week就写4
             hInfo: 节日描述信息
         */
-        this.basicFestivalData = [
-            [
-                { hName: "New Year's Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
-                { hName: "Martin Luther King Day", fixed: false, ordinal: 3, week: 1, hInfo: "" },
-                { hName: "Australia Day", fixed: 26, ordinal: false, week: false, hInfo: "" },
-            ],
-            [
-                { hName: "Valentine's Day", fixed: 14, ordinal: false, week: false, hInfo: "" },
-                { hName: "President's Day", fixed: false, ordinal: 3, week: 1, hInfo: "" },
-            ],
-            [
-                { hName: "Women's Day", fixed: 8, ordinal: false, week: false, hInfo: "" },
-                { hName: "Pi Day", fixed: 14, ordinal: false, week: false, hInfo: "" },
-                { hName: "St. Patrick's Day", fixed: 17, ordinal: false, week: false, hInfo: "" },
-                { hName: "World Water Day", fixed: 22, ordinal: false, week: false, hInfo: "" },
-            ],
-            [
-                { hName: "April Fool's Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
-                { hName: "Tax Day", fixed: 15, ordinal: false, week: false, hInfo: "" },
-                { hName: "Earth Day", fixed: 22, ordinal: false, week: false, hInfo: "" },
-                { hName: "Anzac Day", fixed: 25, ordinal: false, week: false, hInfo: "" },
-            ],
-            [
-                { hName: "May Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
-                { hName: "Nurse Day", fixed: 12, ordinal: false, week: false, hInfo: "" },
-                { hName: "Mother's Day", fixed: false, ordinal: 2, week: 0, hInfo: "" },
-                { hName: "Memorial Day", fixed: false, ordinal: -1, week: 1, hInfo: "" },
-            ],
-            [
-                { hName: "Father's Day", fixed: false, ordinal: 3, week: 0, hInfo: "" },
-            ],
-            [
-                { hName: "Canada Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
-                { hName: "Independence Day", fixed: 4, ordinal: false, week: false, hInfo: "" },
-            ],
-            [
+        this.basicFestivalData = {
+            en:
+                [
+                    [
+                        { hName: "New Year's Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Martin Luther King Day", fixed: false, ordinal: 3, week: 1, hInfo: "" },
+                        { hName: "Australia Day", fixed: 26, ordinal: false, week: false, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Valentine's Day", fixed: 14, ordinal: false, week: false, hInfo: "" },
+                        { hName: "President's Day", fixed: false, ordinal: 3, week: 1, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Women's Day", fixed: 8, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Pi Day", fixed: 14, ordinal: false, week: false, hInfo: "" },
+                        { hName: "St. Patrick's Day", fixed: 17, ordinal: false, week: false, hInfo: "" },
+                        { hName: "World Water Day", fixed: 22, ordinal: false, week: false, hInfo: "" },
+                    ],
+                    [
+                        { hName: "April Fool's Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Tax Day", fixed: 15, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Earth Day", fixed: 22, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Anzac Day", fixed: 25, ordinal: false, week: false, hInfo: "" },
+                    ],
+                    [
+                        { hName: "May Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Nurse Day", fixed: 12, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Mother's Day", fixed: false, ordinal: 2, week: 0, hInfo: "" },
+                        { hName: "Memorial Day", fixed: false, ordinal: -1, week: 1, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Father's Day", fixed: false, ordinal: 3, week: 0, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Canada Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Independence Day", fixed: 4, ordinal: false, week: false, hInfo: "" },
+                    ],
+                    [
+
+                    ],
+                    [
+                        { hName: "Labor Day", fixed: false, ordinal: 1, week: 1, hInfo: "" },
+                        { hName: "Father's Day", fixed: false, ordinal: 1, week: 1, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Columbus Day", fixed: false, ordinal: 2, week: 1, hInfo: "" },
+                        { hName: "Seniors Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Halloween", fixed: 31, ordinal: false, week: false, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Election Day", fixed: 2, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Veterans Day", fixed: 11, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Thanksgiving Day", fixed: false, ordinal: 4, week: 4, hInfo: "" },
+                    ],
+                    [
+                        { hName: "Christmas", fixed: 25, ordinal: false, week: false, hInfo: "" },
+                        { hName: "Boxing Day", fixed: 26, ordinal: false, week: false, hInfo: "" },
+                    ]
+                ],
+            de: [
 
             ],
-            [
-                { hName: "Labor Day", fixed: false, ordinal: 1, week: 1, hInfo: "" },
-                { hName: "Father's Day", fixed: false, ordinal: 1, week: 1, hInfo: "" },
-            ],
-            [
-                { hName: "Columbus Day", fixed: false, ordinal: 2, week: 1, hInfo: "" },
-                { hName: "Seniors Day", fixed: 1, ordinal: false, week: false, hInfo: "" },
-                { hName: "Halloween", fixed: 31, ordinal: false, week: false, hInfo: "" },
-            ],
-            [
-                { hName: "Election Day", fixed: 2, ordinal: false, week: false, hInfo: "" },
-                { hName: "Veterans Day", fixed: 11, ordinal: false, week: false, hInfo: "" },
-                { hName: "Thanksgiving Day", fixed: false, ordinal: 4, week: 4, hInfo: "" },
-            ],
-            [
-                { hName: "Christmas", fixed: 25, ordinal: false, week: false, hInfo: "" },
-                { hName: "Boxing Day", fixed: 26, ordinal: false, week: false, hInfo: "" },
+            fr: [
+
             ]
-        ];
+        };
 
 
         let oDate = new Date(); //当前日期对象
@@ -76,7 +87,7 @@ class festivalRemind {
         this.currentMonth = oDate.getMonth();//当前月份
         this.currentDate = oDate.getDate();//当前多少号
         this.nextMonthFirstDay = new Date(this.currentYear, this.currentMonth + 1, 1).getTime();//下个月1号时间戳
-        this.currentMonthArr = this.basicFestivalData[this.currentMonth];//当前月份节日数组
+        this.currentMonthArr = this.basicFestivalData[this.siteLang][this.currentMonth];//当前月份节日数组
         this.daysBeforeFestival = 14; //节日之前多少天需要提醒，可修改
         this.daysAfterFestival = 3; //节日之后需要提醒多少天，可修改
         this.preMonthArr = [];   //上一个月节日数组
@@ -89,6 +100,18 @@ class festivalRemind {
 
     }
 
+    /**
+     * 获取站点语言
+     */
+    getSiteLang() {
+        let siteVal = document.querySelector('#site').value.toLowerCase().trim();
+        if (!siteVal) return;
+        if (siteVal === 'csde') {
+            this.siteLang = 'de';
+        } else if (siteVal === 'csfr') {
+            this.siteLang = 'fr';
+        }
+    }
 
     /**
      * [getSpecificDate 根据几月的第几个星期几算出节日具体是多少号]
@@ -173,13 +196,13 @@ class festivalRemind {
     check() {
         //如果当前这一天处于节日后提醒天数之前就检查上一个月
         if (this.currentDate < (this.daysAfterFestival + 1)) {
-            this.preMonthArr = this.basicFestivalData[this.currentMonth - 1];
+            this.preMonthArr = this.basicFestivalData[this.siteLang][this.currentMonth - 1];
             this.getFinalFestivalArr(this.preMonthArr, this.currentMonth - 1);
         }
         this.getFinalFestivalArr(this.currentMonthArr, this.currentMonth);
         //如果当前这一天 + 节日前提醒时间  已经超过了下个月1号就检查下个月
         if ((this.currentTime + 86400000 * this.daysBeforeFestival) > this.nextMonthFirstDay) {
-            this.nextMonthArr = this.basicFestivalData[this.currentMonth + 1];
+            this.nextMonthArr = this.basicFestivalData[this.siteLang][this.currentMonth + 1];
             this.getFinalFestivalArr(this.nextMonthArr, this.currentMonth + 1);
         }
     }
@@ -191,7 +214,7 @@ class festivalRemind {
         //处理Easter
         let { hMonth, hDay } = this.easterInfo;
         let tmpEasterObj = { hName: "Easter", fixed: hDay, ordinal: false, week: false, hInfo: "" };
-        this.basicFestivalData[hMonth - 1].push(tmpEasterObj);
+        this.basicFestivalData[this.siteLang][hMonth - 1].push(tmpEasterObj);
 
         let eastertime = new Date(this.currentYear, hMonth - 1, hDay).getTime();
         //处理UK Mother's Day
@@ -208,7 +231,7 @@ class festivalRemind {
     fillBasicFestivalData(timestamp = 0, hName = '') {
         let dateObj = new Date(timestamp);
         let hObj = { hName, fixed: dateObj.getDate(), ordinal: false, week: false, hInfo: "" };
-        this.basicFestivalData[dateObj.getMonth()].push(hObj);
+        this.basicFestivalData[this.siteLang][dateObj.getMonth()].push(hObj);
     }
 
     /**
@@ -223,23 +246,21 @@ class festivalRemind {
         oTr.innerHTML = '<td class="td_label">Festival Prefix</td><td class="td_value"></td>';
         oTable.insertBefore(oTr, oTable.children[10]);
         let isAnyoneClicked = false;
-        for (let i = 0, len = this.finalFestivalData.length; i < len; i++) {
+        this.finalFestivalData.forEach((v, index) => {
             let oInput = document.createElement('input');
-            oInput.value = this.finalFestivalData[i].hName;
-            oInput.setAttribute('title', this.finalFestivalData[i].hInfo);
+            oInput.value = this.finalFestivalData[index].hName;
+            oInput.setAttribute('title', this.finalFestivalData[index].hInfo);
             oInput.type = 'button';
             oInput.style.marginRight = '8px';
             oInput.addEventListener('click', function () {
                 let originalVal = oTitle.value;
                 if (originalVal.includes(this.value)) return;
                 oTitle.value = isAnyoneClicked ? `${this.value} - ${originalVal.substring(originalVal.indexOf('-') + 2)}` : `${this.value} - ${originalVal}`;
-                if (originalVal === '') {
-                    oTitle.focus();
-                }
+                if (originalVal === '') oTitle.focus();
                 isAnyoneClicked = true;
             });
             oTr.children[1].appendChild(oInput);
-        }
+        });
     }
 
 }
